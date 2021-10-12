@@ -3,7 +3,7 @@ module HW1.T1 where
 import GHC.Natural (Natural)
 -- | 1. Define the following data type:
 -- | data Day = Monday | Tuesday | ... | Sunday
-data Day
+data Day = Monday
 
 -- | 2. Implement the following functions:
 
