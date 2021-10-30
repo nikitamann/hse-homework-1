@@ -8,9 +8,12 @@ instance Semigroup (ListPlus a) where
   (<>) = undefined
 
 data Inclusive a b = This a | That b | Both a b
--- 2. Define a lawful Semigroup instance for ListPlus:
-instance Semigroup (Inclusive a b) where
+-- 2. Define a lawful Semigroup instance for Inclusive:
+instance (Semigroup a, Semigroup b) => Semigroup (Inclusive a b) where
   (<>) = undefined
+-- The instance must not discard any values:
+-- This i  <>  This j  =  This (i <> j)   -- OK
+-- This i  <>  This _  =  This i          -- This is not the Semigroup you're looking for.
 
 newtype DotString = DS String
 -- 3. Implement a Semigroup instance for DotString, such that the strings are concatenated with a dot:
