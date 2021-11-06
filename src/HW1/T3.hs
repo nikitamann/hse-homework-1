@@ -12,23 +12,32 @@ data Tree a = Leaf | Branch Int (Tree a) a (Tree a)
 
 -- | Size of the tree, O(1).
 tsize :: Tree a -> Int
-tsize = undefined
+tsize Leaf = 0
+tsize (Branch size l_tree h_elem r_tree) = size
 
 -- | Depth of the tree.
 tdepth :: Tree a -> Int
-tdepth = undefined
+tdepth Leaf = 0
+tdepth (Branch size l_tree h_elem r_tree) = 1 + max (tdepth l_tree) (tdepth r_tree)
 
 -- | Check if the element is in the tree, O(log n)
 tmember :: Ord a => a -> Tree a -> Bool
-tmember = undefined
+tmember _ Leaf = False
+tmember element (Branch size l_tree h_elem r_tree) | element == h_elem = True
+                                                   | element < h_elem = tmember element l_tree
+                                                   | element > h_elem = tmember element r_tree
 
 -- | Insert an element into the tree, O(log n)
 tinsert :: Ord a => a -> Tree a -> Tree a
-tinsert = undefined
+tinsert element Leaf = Branch 1 Leaf element Leaf
+tinsert element (Branch size l_tree h_elem r_tree) | element == h_elem = Branch size l_tree h_elem r_tree
+                                                   | element < h_elem = Branch (size + 1) (tinsert element l_tree) h_elem r_tree
+                                                   | element > h_elem = Branch (size + 1) l_tree h_elem (tinsert element r_tree)
 
 -- | Build a tree from a list, O(n log n)
 tFromList :: Ord a => [a] -> Tree a
-tFromList = undefined
+tFromList [] = Leaf
+tFromList (x : xs) = tinsert x (tFromList xs)
 
 -- | Tip 1: in order to maintain the CachedSize invariant, define a helper function:
 mkBranch :: Tree a -> a -> Tree a -> Tree a
