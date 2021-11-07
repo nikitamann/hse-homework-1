@@ -8,22 +8,22 @@ data Nat = Z | S Nat
 -- | 1. Implement the following operations
 
 nplus :: Nat -> Nat -> Nat        -- addition
-nplus Z x = x
+nplus Z x     = x
 nplus (S x) y = S (nplus x y)
 
 nmult :: Nat -> Nat -> Nat       -- multiplication
-nmult x Z = Z
+nmult x Z     = Z
 nmult x (S y) = nplus x (nmult x y)
 
 nsub :: Nat -> Nat -> Maybe Nat   -- subtraction     (Nothing if result is negative)
-nsub Z x = Just x
-nsub x Z = Nothing
-nsub  (S x) (S y) = nsub x y
+nsub Z x         = Just x
+nsub x Z         = Nothing
+nsub (S x) (S y) = nsub x y
 
 ncmp :: Nat -> Nat -> Ordering  -- comparison      (Do not derive Ord)
-ncmp Z Z = EQ
-ncmp Z _ = LT
-ncmp _ Z = GT
+ncmp Z Z         = EQ
+ncmp Z _         = LT
+ncmp _ Z         = GT
 ncmp (S x) (S y) = ncmp x y
 
 nFromNatural :: Natural -> Nat
@@ -31,7 +31,7 @@ nFromNatural 0 = Z
 nFromNatural x = S (nFromNatural (x-1))
 
 nToNum :: Num a => Nat -> a
-nToNum Z = 0
+nToNum Z     = 0
 nToNum (S x) = (1 + nToNum x)
 
 -- | 2*. Implement the following operations
