@@ -6,7 +6,7 @@ import HW1.T3 (Tree(..))
 tfoldr :: (a -> b -> b) -> b -> Tree a -> b
 tfoldr _ ini Leaf = ini
 tfoldr f ini (Branch size l_tree h_elem r_tree) = tfoldr f fold_internal l_tree
-    where fold_internal = f h_elem fold_ini_r_tree
+    where fold_internal   = f h_elem fold_ini_r_tree
           fold_ini_r_tree = tfoldr f ini r_tree
 
 instance Foldable Tree where
