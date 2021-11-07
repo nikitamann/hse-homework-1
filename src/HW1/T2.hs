@@ -38,24 +38,26 @@ nToNum (S x) = (1 + nToNum x)
 -- (Advanced) Implement the following operations:
 
 nEven, nOdd :: Nat -> Bool    -- parity checking
-nEven = undefined
-nOdd = undefined
+nEven Z = True
+nEven x | ncmp x (S Z) == GT = nEven (f (nsub x (S (S Z))))
+        | otherwise          = False
+        where f :: Maybe Nat -> Nat
+              f (Just res) = res
+nOdd x | nEven x == False = True
+       | otherwise        = False
 
 ndiv :: Nat -> Nat -> Nat         -- integer division
-ndiv = undefined
+ndiv _ Z = errorWithoutStackTrace "Na nol ne delim!!!"
+ndiv x y | ncmp x y == LT = Z
+         | ncmp x y == GT = S (ndiv (f (nsub x y)) y)
+         | otherwise      = S Z
+         where f :: Maybe Nat -> Nat
+               f (Just res) = res
 
 nmod :: Nat -> Nat -> Nat         -- modulo operation
-nmod = undefined
-
--- | 2*. Implement the following operations
--- (Advanced) Implement the following operations:
-
-nEven, nOdd :: Nat -> Bool    -- parity checking
-nEven = undefined
-nOdd = undefined
-
-ndiv :: Nat -> Nat -> Nat         -- integer division
-ndiv = undefined
-
-nmod :: Nat -> Nat -> Nat         -- modulo operation
-nmod = undefined
+nmod _ Z = errorWithoutStackTrace "Na nol ne delim!!!"
+nmod x y | ncmp x y == LT = x
+         | ncmp x y == GT = nmod (f (nsub x y)) y
+         | otherwise      = Z
+         where f :: Maybe Nat -> Nat
+               f (Just res) = res
