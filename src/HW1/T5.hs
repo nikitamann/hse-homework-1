@@ -4,7 +4,10 @@ import Data.List.NonEmpty (NonEmpty(..))
 
 -- 1. Implement the following function:
 splitOn :: Eq a => a -> [a] -> NonEmpty [a]
-splitOn = undefined
+splitOn _ [] = [] :| []
+splitOn sep (x : xs) | sep == x  = [] :| y : ys
+                     | otherwise = (x : y) :| ys
+                     where (y :| ys) = splitOn sep xs
 
 -- | Conceptually, it splits a list into sublists by a separator:
 -- ghci> splitOn '/' "path/to/file"
@@ -20,7 +23,10 @@ splitOn = undefined
 
 -- 2. Implement the following function:
 joinWith :: a -> NonEmpty [a] -> [a]
-joinWith = undefined
+joinWith _ (x :| [])   = x
+joinWith sep (x :| xs) = x ++ [sep] ++ joinWith sep (helper xs)
+    where helper :: [a] -> NonEmpty a
+          helper (x : xs) = x :| xs
 
 -- | It must be the inverse of splitOn, so that:
 -- (joinWith sep . splitOn sep) ≡ id
