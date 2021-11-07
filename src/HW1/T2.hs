@@ -16,8 +16,8 @@ nmult x Z     = Z
 nmult x (S y) = nplus x (nmult x y)
 
 nsub :: Nat -> Nat -> Maybe Nat   -- subtraction     (Nothing if result is negative)
-nsub Z x         = Just x
-nsub x Z         = Nothing
+nsub x Z         = Just x
+nsub Z x         = Nothing
 nsub (S x) (S y) = nsub x y
 
 ncmp :: Nat -> Nat -> Ordering  -- comparison      (Do not derive Ord)
