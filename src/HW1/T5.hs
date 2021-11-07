@@ -26,7 +26,7 @@ joinWith :: a -> NonEmpty [a] -> [a]
 joinWith _ (x :| [])   = x
 joinWith sep (x :| xs) = x ++ [sep] ++ joinWith sep (helper xs)
     where helper :: [a] -> NonEmpty a
-          helper (x : xs) = x :| xs
+          helper (y : ys) = y :| ys
 
 -- | It must be the inverse of splitOn, so that:
 -- (joinWith sep . splitOn sep) ≡ id
